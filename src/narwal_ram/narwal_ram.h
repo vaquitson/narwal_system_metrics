@@ -8,7 +8,7 @@ typedef long int MemSize_t;
 
 MemSize_t narwal_ram_size(void);
 MemSize_t narwal_ram_usage(void);
-
+float narwal_ram_usage_percentage();
 
 #define NARWAL_READ_SIZE 250
 

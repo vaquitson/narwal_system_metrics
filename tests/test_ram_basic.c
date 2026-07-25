@@ -9,5 +9,7 @@ int main(void){
   printf("Ram size: %ld\n", narwal_ram_size());
   printf("Ram size: %ld\n", narwal_ram_size());
   printf("Ram usage: %ld\n", narwal_ram_usage());
+  printf("Ram usage: %f%\n", narwal_ram_usage_percentage());
+
   return 0;
 }

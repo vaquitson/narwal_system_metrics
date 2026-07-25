@@ -59,12 +59,6 @@ int priv_narwal_read_meminfo(char *buf, size_t size, unsigned int opt){
       return NARWAL_RAM_OPEN_ERR; 
   }
 
-  if (meminfo_fd < 0) {
-    meminfo_fd = open(NARWAL_RAM_MEMINFO_PATH, O_RDONLY);
-    if (meminfo_fd < 0)
-      return NARWAL_RAM_OPEN_ERR; 
-  }
-
   data_read = read(meminfo_fd, buf, size-1);
   if (data_read < 0)
     return NARWAL_RAM_READ_ERR;
@@ -107,11 +101,12 @@ MemSize_t narwal_ram_size(void){
 
 
 MemSize_t narwal_ram_usage(void){
+  static char buf[NARWAL_READ_SIZE] = {0};
+
   ssize_t data_read;
   long int ram_free = 0;
   long int ram_size = 0;
   long int rc = 0;
-  static char buf[NARWAL_READ_SIZE] = {0};
 
   data_read = priv_narwal_read_meminfo(buf, NARWAL_READ_SIZE, NARWAL_PRIV_OPT_RESET_SEEK);
   if (data_read < 0)
@@ -127,3 +122,20 @@ MemSize_t narwal_ram_usage(void){
 
   return ram_size - ram_free;
 }
+
+
+float narwal_ram_usage_percentage(){
+  MemSize_t ram_size;  
+  MemSize_t ram_usgae;
+
+  ram_size = narwal_ram_size();
+  if (ram_size < 0)
+    return ram_size;
+
+  ram_usgae = narwal_ram_usage();
+  if (ram_usgae < 0)
+    return ram_usgae;
+
+  return ((100.0 * ram_usgae) / ram_size);
+}
+
