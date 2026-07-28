@@ -11,8 +11,7 @@
  
 #include "narwal_cpu.h"
 
-int stat_fd = -1;
-
+//###### UTILITIS  ######//
 
 #define NARWAL_PRIV_OPT_RESET_SEEK 1
 
@@ -52,14 +51,20 @@ ssize_t priv_narwal_string_read_fd(int *fd, char *buf,
   return data_read;
 }
 
+//###### END UTILITIS  ######//
+
+
+int stat_fd = -1;
+
 float narwal_cpu_usage_percentage(void){
   char buf[NARWAL_CPU_READ_SIZE] = {0};
   ssize_t read_size;
-  int err;
+  int err = 0;
   
   read_size = priv_narwal_string_read_fd(&stat_fd, buf, 
                                          NARWAL_CPU_READ_SIZE, NARWAL_CPU_STAT_PATH, 
                                          NARWAL_PRIV_OPT_RESET_SEEK, &err);
+
   if (read_size < 0){
     printf("xd: %d\n", err);
   } else {

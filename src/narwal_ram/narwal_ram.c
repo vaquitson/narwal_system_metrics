@@ -8,6 +8,50 @@
  
 #include "narwal_ram.h"
 
+
+//###### UTILITIS  ######//
+
+#define NARWAL_PRIV_OPT_RESET_SEEK 1
+
+// Initialize the global fd if not priviously intialize
+ssize_t priv_narwal_string_read_fd(int *fd, char *buf, 
+                                   size_t size, const char *path,
+                                   unsigned int opt, int *err){
+
+  if (buf == NULL) {
+    *err = NARWAL_RAM_EVENT_PREFIX(NULL_BUF);
+    return -1;
+  }
+
+  size_t data_read;
+  if (*fd < 0) {
+    *fd = open(path , O_RDONLY);
+    if (*fd < 0){
+      *err = NARWAL_RAM_EVENT_PREFIX(OPEN_ERR);
+      return -1;
+    }
+  }
+
+  data_read = read(*fd, buf, size-1);
+  if (data_read < 0){
+    *err = NARWAL_RAM_EVENT_PREFIX(READ_ERR);
+    return -1;
+  }
+
+  buf[data_read] = '\0';
+
+  if ((opt & NARWAL_PRIV_OPT_RESET_SEEK) == NARWAL_PRIV_OPT_RESET_SEEK)
+    if (lseek(*fd, 0, SEEK_SET) == -1){
+      *err = NARWAL_RAM_EVENT_PREFIX(SEEK_RESET_ERR);
+      return -1; 
+    }
+   
+  return data_read;
+}
+
+//###### END UTILITIS  ######//
+
+
 int meminfo_fd = -1;
 
 MemSize_t priv_narwal_ram_parse_line(char *str){
@@ -102,14 +146,14 @@ MemSize_t narwal_ram_size(void){
 
 MemSize_t narwal_ram_usage(void){
   static char buf[NARWAL_RAM_READ_SIZE] = {0};
-
+  int err;
   ssize_t data_read;
   long int ram_free = 0;
   long int ram_size = 0;
 
-  data_read = priv_narwal_read_meminfo(buf, NARWAL_RAM_READ_SIZE, NARWAL_PRIV_OPT_RESET_SEEK);
-  if (data_read < 0)
-    return data_read;
+  data_read = priv_narwal_string_read_fd(&meminfo_fd, buf,
+                             NARWAL_RAM_READ_SIZE, NARWAL_RAM_MEMINFO_PATH,
+                             NARWAL_PRIV_OPT_RESET_SEEK, &err);
 
   ram_free = priv_narwal_ram_get_entry_from_str(buf, "MemFree");
   if (ram_free < 0)

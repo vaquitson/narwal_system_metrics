@@ -12,6 +12,8 @@ float narwal_ram_usage_percentage(void);
 
 #define NARWAL_RAM_READ_SIZE 250
 
+#define NARWAL_RAM_EVENT_PREFIX(X) NARWAL_RAM_##X
+
 #define NARWAL_RAM_SUCCESS         0
 #define NARWAL_RAM_OPEN_ERR       -1
 #define NARWAL_RAM_READ_ERR       -2
