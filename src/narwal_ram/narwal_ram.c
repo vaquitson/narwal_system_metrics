@@ -31,7 +31,7 @@ MemSize_t priv_narwal_ram_parse_line(char *str){
 }
 
 
-MemSize_t priv_narwal_ram_get_entry_from_str(char *str, char *key){
+MemSize_t priv_narwal_ram_get_entry_from_str(char *str, const char *key){
   char *entry_p;
   
   if (str == NULL || key == NULL)
@@ -106,7 +106,6 @@ MemSize_t narwal_ram_usage(void){
   ssize_t data_read;
   long int ram_free = 0;
   long int ram_size = 0;
-  long int rc = 0;
 
   data_read = priv_narwal_read_meminfo(buf, NARWAL_READ_SIZE, NARWAL_PRIV_OPT_RESET_SEEK);
   if (data_read < 0)
@@ -124,7 +123,7 @@ MemSize_t narwal_ram_usage(void){
 }
 
 
-float narwal_ram_usage_percentage(){
+float narwal_ram_usage_percentage(void){
   MemSize_t ram_size;  
   MemSize_t ram_usgae;
 

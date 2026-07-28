@@ -6,9 +6,9 @@ NARWAL_RAM_DIR = ./src/narwal_ram
 CPPFLAGS_TZ =  -I$(NARWAL_TZ_DIR) 
 CPPFLAGS_RAM = -I$(NARWAL_RAM_DIR) 
 
-test_tz: $(NARWAL_TZ_DIR)/narwal_thermal_zones.c  ./tests/basic_test.c 
+test_tz: $(NARWAL_TZ_DIR)/narwal_thermal_zones.c  ./tests/test_tz.c 
 	mkdir -p ./build/tests/
-	$(CC) $(CPPFLAGS_TZ) -o ./build/tests/basic_test $(NARWAL_TZ_DIR)/narwal_thermal_zones.c  ./tests/basic_test.c 
+	$(CC) $(CPPFLAGS_TZ) -o ./build/tests/basic_test $(NARWAL_TZ_DIR)/narwal_thermal_zones.c  ./tests/test_tz.c  
 
 test_ram: $(NARWAL_RAM_DIR)/narwal_ram.c ./tests/test_ram_basic.c
 	mkdir -p ./build/tests/
