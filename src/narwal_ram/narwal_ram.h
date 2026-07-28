@@ -10,7 +10,7 @@ MemSize_t narwal_ram_size(void);
 MemSize_t narwal_ram_usage(void);
 float narwal_ram_usage_percentage(void);
 
-#define NARWAL_READ_SIZE 250
+#define NARWAL_RAM_READ_SIZE 250
 
 #define NARWAL_RAM_SUCCESS         0
 #define NARWAL_RAM_OPEN_ERR       -1

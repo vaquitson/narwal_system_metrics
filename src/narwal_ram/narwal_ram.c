@@ -35,7 +35,7 @@ MemSize_t priv_narwal_ram_get_entry_from_str(char *str, const char *key){
   char *entry_p;
   
   if (str == NULL || key == NULL)
-    return NARWAL_READ_SIZE;
+    return NARWAL_RAM_READ_SIZE;
 
   entry_p = strstr(str, key);
   if (entry_p == NULL)
@@ -79,10 +79,10 @@ MemSize_t narwal_ram_size(void){
   
   if (ram_size == 0){
     long int rc;
-    char buf[NARWAL_READ_SIZE];
+    char buf[NARWAL_RAM_READ_SIZE];
     ssize_t data_read;
 
-    data_read = priv_narwal_read_meminfo(buf, NARWAL_READ_SIZE, NARWAL_PRIV_OPT_RESET_SEEK);
+    data_read = priv_narwal_read_meminfo(buf, NARWAL_RAM_READ_SIZE, NARWAL_PRIV_OPT_RESET_SEEK);
     if (data_read < 0)
       return data_read;
 
@@ -101,13 +101,13 @@ MemSize_t narwal_ram_size(void){
 
 
 MemSize_t narwal_ram_usage(void){
-  static char buf[NARWAL_READ_SIZE] = {0};
+  static char buf[NARWAL_RAM_READ_SIZE] = {0};
 
   ssize_t data_read;
   long int ram_free = 0;
   long int ram_size = 0;
 
-  data_read = priv_narwal_read_meminfo(buf, NARWAL_READ_SIZE, NARWAL_PRIV_OPT_RESET_SEEK);
+  data_read = priv_narwal_read_meminfo(buf, NARWAL_RAM_READ_SIZE, NARWAL_PRIV_OPT_RESET_SEEK);
   if (data_read < 0)
     return data_read;
 
