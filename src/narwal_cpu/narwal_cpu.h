@@ -2,7 +2,7 @@
 #define NARWAL_CPU_H
 
 #define NARWAL_CPU_STAT_PATH "/proc/stat"
-#define NARWAL_CPU_READ_SIZE 100
+#define NARWAL_CPU_READ_SIZE 200
 
 float narwal_cpu_usage_percentage(void);
 
@@ -15,8 +15,5 @@ float narwal_cpu_usage_percentage(void);
 #define NARWAL_CPU_TO_LARGE_ENTRY -4
 #define NARWAL_CPU_NULL_BUF       -5
 #define NARWAL_CPU_SEEK_RESET_ERR -6
-
-
-
 
 #endif
