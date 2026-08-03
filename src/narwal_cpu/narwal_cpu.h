@@ -1,19 +1,24 @@
 #ifndef NARWAL_CPU_H
 #define NARWAL_CPU_H
 
-#define NARWAL_CPU_STAT_PATH "/proc/stat"
-#define NARWAL_CPU_READ_SIZE 200
+#include <stdint.h>
+#include <stddef.h>
 
-float narwal_cpu_usage_percentage(void);
+#define NARWAL_CPU_TIME_T int64_t
 
-#define NARWAL_CPU_EVENT_PREFIX(X) NARWAL_CPU_##X
+typedef struct {
+  int cpu_n;
+  NARWAL_CPU_TIME_T info_arr[10];
+} NarwalCpu;
 
-#define NARWAL_CPU_SUCCESS         0
-#define NARWAL_CPU_OPEN_ERR       -1
-#define NARWAL_CPU_READ_ERR       -2
-#define NARWAL_CPU_KEY_NOT_FOUND  -3
-#define NARWAL_CPU_TO_LARGE_ENTRY -4
-#define NARWAL_CPU_NULL_BUF       -5
-#define NARWAL_CPU_SEEK_RESET_ERR -6
+int narwal_cpu_print_info(NarwalCpu *cpu_p);
+
+NARWAL_CPU_TIME_T narwal_cpu_idle_time(NarwalCpu *cpu_p);
+
+NARWAL_CPU_TIME_T narwal_cpu_busy_time(NarwalCpu *cpu_p);
+
+int narwal_cpu_init(NarwalCpu *cpu_p, int cpu_n);
+
+#define NARWAL_CPU_GENERAL_CPU -1
 
 #endif
