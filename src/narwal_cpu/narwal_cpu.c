@@ -181,6 +181,7 @@ int priv_narwal_cpu_get_info(
 
   cpu_name_str_p[4] = '\0';
 
+  // bastante fucking risky
   while (1) { 
     read_size = priv_narwal_string_read_fd(&stat_fd, stat_str_p, 
                                            NARWAL_CPU_READ_SIZE, NARWAL_CPU_STAT_PATH, 

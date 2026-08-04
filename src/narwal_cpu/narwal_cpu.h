@@ -6,6 +6,7 @@
 
 #define NARWAL_CPU_TIME_T int64_t
 
+
 typedef struct {
   int cpu_n;
   NARWAL_CPU_TIME_T info_arr[10];
