@@ -240,3 +240,4 @@ int narwal_thermal_zones_fill_by_type(NarwalThermalZone *tz_p, const char *type_
 
   return rc;
 }
+

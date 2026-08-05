@@ -1,3 +1,16 @@
+/**
+* @file narwal_cpu.c
+* @brief Internal implementation of the Narwal CPU interface.
+*
+* This file contains the functions required to retrieve and process
+* CPU information from the /proc/stat file.
+*
+* For more information about the /proc/stat format, see:
+* https://docs.kernel.org/filesystems/proc.html#miscellaneous-kernel-statistics-in-proc-stat
+*
+* @author Narwal
+*/
+
 #include <stddef.h>
 #include <fcntl.h>
 #include <stdint.h>
@@ -342,3 +355,11 @@ int narwal_cpu_info(NarwalCpu *cpu_p) {
   
    return NARWAL_CPU_EVENT_PREFIX(SUCCESS);
 }
+
+
+#ifdef NARWAL_TEST
+int *priv_narwal_cpu_get_fd()
+{
+  return &stat_fd;
+}
+#endif

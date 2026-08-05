@@ -2,9 +2,13 @@
 #include "narwal_cpu.h"
 
 int test_cpu_percentage(void){
+  int stat_fd;
   int rc = 0;
   NarwalCpu cpu = {0};
   NARWAL_CPU_TIME_T time = 0;
+
+
+  printf("fd: %d\n", *priv_narwal_cpu_get_fd());
 
   rc = narwal_cpu_init(&cpu, NARWAL_CPU_GENERAL_CPU);
   if (rc < 0) {
