@@ -1,0 +1,175 @@
+\doxysection{/\+home/\+narval/\+programing/\+narwal\+\_\+libs/\+narwal\+\_\+system\+\_\+metrics/\+src/\+narwal\+\_\+thermal\+\_\+zones/\+narwal\+\_\+thermal\+\_\+zones.c File Reference}
+\hypertarget{narwal__thermal__zones_8c}{}\label{narwal__thermal__zones_8c}\index{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_thermal\_zones/narwal\_thermal\_zones.c@{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_thermal\_zones/narwal\_thermal\_zones.c}}
+
+
+Internal implementation of the Narwal Thermal Zones interface.  
+
+
+{\ttfamily \+\#include $<$dirent.\+h$>$}\newline
+{\ttfamily \+\#include $<$stddef.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$unistd.\+h$>$}\newline
+{\ttfamily \+\#include $<$errno.\+h$>$}\newline
+{\ttfamily \+\#include "{}narwal\+\_\+thermal\+\_\+zones.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{narwal__thermal__zones_8c_ac085a58b55bcedb3ab752700fd665195}{EVENT\+\_\+\+PREFIX}}(X)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{narwal__thermal__zones_8c_aeeec8834caa741e2e442895f0ce6d1f4}\label{narwal__thermal__zones_8c_aeeec8834caa741e2e442895f0ce6d1f4} 
+size\+\_\+t {\bfseries priv\+\_\+narwal\+\_\+thermal\+\_\+zones\+\_\+strnlen} (const char \texorpdfstring{$\ast$}{*}str, size\+\_\+t max\+\_\+len)
+\item 
+\Hypertarget{narwal__thermal__zones_8c_ab8a011bf49c6ca912a1a40df9a9d512e}\label{narwal__thermal__zones_8c_ab8a011bf49c6ca912a1a40df9a9d512e} 
+size\+\_\+t {\bfseries priv\+\_\+narwal\+\_\+thermal\+\_\+zones\+\_\+strip\+\_\+line\+\_\+jump} (char \texorpdfstring{$\ast$}{*}ptr, char replacement)
+\item 
+int \doxymbox{\hyperlink{narwal__thermal__zones_8c_ac6e6242a173b40ee567063e7ceba164e}{priv\+\_\+narwal\+\_\+thermal\+\_\+zones\+\_\+fill\+\_\+next}} (\doxymbox{\hyperlink{structNarwalThermalZone}{Narwal\+Thermal\+Zone}} \texorpdfstring{$\ast$}{*}tz\+\_\+p, unsigned int opts)
+\begin{DoxyCompactList}\small\item\em Retrieves the next available thermal zone. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{narwal__thermal__zones_8c_a17885c059591dd20e90dfd9ab1a29899}{narwal\+\_\+thermal\+\_\+zones\+\_\+get\+\_\+type}} (\doxymbox{\hyperlink{structNarwalThermalZone}{Narwal\+Thermal\+Zone}} \texorpdfstring{$\ast$}{*}tz\+\_\+p)
+\begin{DoxyCompactList}\small\item\em Return the type name of the provided thermal zone. \end{DoxyCompactList}\item 
+\Hypertarget{narwal__thermal__zones_8c_ae483771f942abe9abf7bb9a915de8d1e}\label{narwal__thermal__zones_8c_ae483771f942abe9abf7bb9a915de8d1e} 
+float {\bfseries narwal\+\_\+thermal\+\_\+zones\+\_\+get\+\_\+temp} (\doxymbox{\hyperlink{structNarwalThermalZone}{Narwal\+Thermal\+Zone}} \texorpdfstring{$\ast$}{*}tz\+\_\+p)
+\item 
+int \doxymbox{\hyperlink{narwal__thermal__zones_8c_a8dbc6fadfc71f33568aa577dce0fad02}{narwal\+\_\+thermal\+\_\+zones\+\_\+fill\+\_\+by\+\_\+type}} (\doxymbox{\hyperlink{structNarwalThermalZone}{Narwal\+Thermal\+Zone}} \texorpdfstring{$\ast$}{*}tz\+\_\+p, const char \texorpdfstring{$\ast$}{*}type\+\_\+str\+\_\+p)
+\begin{DoxyCompactList}\small\item\em Retrieve the thermal zone corresponding to the provided type string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{narwal__thermal__zones_8c_a9470f143d78de0d487d953028bec3c86}\label{narwal__thermal__zones_8c_a9470f143d78de0d487d953028bec3c86} 
+DIR \texorpdfstring{$\ast$}{*} {\bfseries d\+\_\+p} = NULL
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal implementation of the Narwal Thermal Zones interface. 
+
+This file contains the internal functions used to enumerate and read thermal zones exposed by the Linux thermal subsystem. 
+
+\label{doc-define-members}
+\Hypertarget{narwal__thermal__zones_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{narwal__thermal__zones_8c_ac085a58b55bcedb3ab752700fd665195}\index{narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}!EVENT\_PREFIX@{EVENT\_PREFIX}}
+\index{EVENT\_PREFIX@{EVENT\_PREFIX}!narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}}
+\doxysubsubsection{\texorpdfstring{EVENT\_PREFIX}{EVENT\_PREFIX}}
+{\footnotesize\ttfamily \label{narwal__thermal__zones_8c_ac085a58b55bcedb3ab752700fd665195} 
+\+\#define EVENT\+\_\+\+PREFIX(\begin{DoxyParamCaption}\item[{}]{X}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{NARWAL\_THERMAL\_ZONES\_\#\#X}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{narwal__thermal__zones_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{narwal__thermal__zones_8c_a8dbc6fadfc71f33568aa577dce0fad02}\index{narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}!narwal\_thermal\_zones\_fill\_by\_type@{narwal\_thermal\_zones\_fill\_by\_type}}
+\index{narwal\_thermal\_zones\_fill\_by\_type@{narwal\_thermal\_zones\_fill\_by\_type}!narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}}
+\doxysubsubsection{\texorpdfstring{narwal\_thermal\_zones\_fill\_by\_type()}{narwal\_thermal\_zones\_fill\_by\_type()}}
+{\footnotesize\ttfamily \label{narwal__thermal__zones_8c_a8dbc6fadfc71f33568aa577dce0fad02} 
+int narwal\+\_\+thermal\+\_\+zones\+\_\+fill\+\_\+by\+\_\+type (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNarwalThermalZone}{Narwal\+Thermal\+Zone}} \texorpdfstring{$\ast$}{*}}]{tz\+\_\+p}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{type\+\_\+str\+\_\+p}{}\end{DoxyParamCaption})}
+
+
+
+Retrieve the thermal zone corresponding to the provided type string. 
+
+Retrieve the thermal zone corresponding to the provided type string. This function clears the structure pointed to by "{}tz\+\_\+p"{}, so it is safe to use with a previously initialized thermal zone.
+
+In case of an error, a negative value is returned indicating the error. The contents of the thermal zone pointed to by "{}tz\+\_\+p"{} may be left in an undefined state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em tz\+\_\+p} & Pointer to the structure where the thermal zone information will be stored.\\
+\hline
+{\em type\+\_\+str\+\_\+p} & String containing the type name of the thermal zone.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An event code. If the returned value is negative, an error has occurred.
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+SUCCESS} & The thermal zone structure was filled successfully. \\
+\hline
+{\em NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+NULL\+\_\+\+PTR} & Either "{}tz\+\_\+p"{} or "{}type\+\_\+str\+\_\+p"{} is NULL. \\
+\hline
+{\em NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+OPEN\+\_\+\+ERR} & An error occurred while trying to open the thermal zone directory /\+sys/\+class/\+thermal/\+. \\
+\hline
+{\em NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+READ\+\_\+\+ERR} & An error occurred while trying to read the type file of a thermal zone. \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{narwal__thermal__zones_8c_a17885c059591dd20e90dfd9ab1a29899}\index{narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}!narwal\_thermal\_zones\_get\_type@{narwal\_thermal\_zones\_get\_type}}
+\index{narwal\_thermal\_zones\_get\_type@{narwal\_thermal\_zones\_get\_type}!narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}}
+\doxysubsubsection{\texorpdfstring{narwal\_thermal\_zones\_get\_type()}{narwal\_thermal\_zones\_get\_type()}}
+{\footnotesize\ttfamily \label{narwal__thermal__zones_8c_a17885c059591dd20e90dfd9ab1a29899} 
+char \texorpdfstring{$\ast$}{*} narwal\+\_\+thermal\+\_\+zones\+\_\+get\+\_\+type (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNarwalThermalZone}{Narwal\+Thermal\+Zone}} \texorpdfstring{$\ast$}{*}}]{tz\+\_\+p}{}\end{DoxyParamCaption})}
+
+
+
+Return the type name of the provided thermal zone. 
+
+Return the type name of the thermal zone pointed to by "{}tz\+\_\+p"{}.
+
+On a successful call, this function returns a pointer to the type string stored in the provided thermal zone structure.
+
+If an error occurs, NULL is returned and the "{}error"{} field of the structure pointed to by "{}tz\+\_\+p"{} is set with the corresponding error code.
+
+
+\begin{DoxyParams}{Parameters}
+{\em tz\+\_\+p} & Pointer to the thermal zone whose type will be retrieved.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the thermal zone type string on success, or NULL if an error occurs. 
+\end{DoxyReturn}
+\Hypertarget{narwal__thermal__zones_8c_ac6e6242a173b40ee567063e7ceba164e}\index{narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}!priv\_narwal\_thermal\_zones\_fill\_next@{priv\_narwal\_thermal\_zones\_fill\_next}}
+\index{priv\_narwal\_thermal\_zones\_fill\_next@{priv\_narwal\_thermal\_zones\_fill\_next}!narwal\_thermal\_zones.c@{narwal\_thermal\_zones.c}}
+\doxysubsubsection{\texorpdfstring{priv\_narwal\_thermal\_zones\_fill\_next()}{priv\_narwal\_thermal\_zones\_fill\_next()}}
+{\footnotesize\ttfamily \label{narwal__thermal__zones_8c_ac6e6242a173b40ee567063e7ceba164e} 
+int priv\+\_\+narwal\+\_\+thermal\+\_\+zones\+\_\+fill\+\_\+next (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNarwalThermalZone}{Narwal\+Thermal\+Zone}} \texorpdfstring{$\ast$}{*}}]{tz\+\_\+p}{, }\item[{unsigned int}]{opts}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the next available thermal zone. 
+
+On each successful call, this function clears the structure pointed to by {\ttfamily tz\+\_\+p} and fills it with information about the next thermal zone available in the system.
+
+Successive calls iterate through the thermal zones exposed under "{}/\+sys/\+class/\+thermal/\+"{}.
+
+When no more thermal zones are available, the function returns NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+NO\+\_\+\+MORE\+\_\+\+TZ and rewinds the internal directory iterator so that the next call starts again from the first thermal zone.
+
+when starting a new search for a specific thermal zone.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em tz\+\_\+p} & Pointer to the structure in which the thermal-\/zone information will be stored. The structure is cleared before being filled.\\
+\hline
+\doxymbox{\texttt{in}}  & {\em opts} & Iteration options.\\
+\hline
+\end{DoxyParams}
+The {\ttfamily opts} parameter controls the iteration behavior:\+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily opts == PRIV\+\_\+\+NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+OPT\+\_\+\+NO\+\_\+\+REWIND}:\+ Continue from the current iterator position.
+\item {\ttfamily opts == PRIV\+\_\+\+NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+OPT\+\_\+\+REWIND}:\+ Rewind the directory iterator before searching. This is useful
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+A Narwal Thermal Zones status code. Negative values indicate errors.
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+SUCCESS} & A thermal zone was retrieved successfully and {\ttfamily tz\+\_\+p} was filled.\\
+\hline
+{\em NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+NO\+\_\+\+MORE\+\_\+\+TZ} & No more thermal zones are available. The internal iterator was rewound.\\
+\hline
+{\em NARWAL\+\_\+\+THERMAL\+\_\+\+ZONES\+\_\+\+OPEN\+\_\+\+ERR} & The {\ttfamily /\+sys/\+class/\+thermal/\+} directory could not be opened. \\
+\hline
+\end{DoxyRetVals}

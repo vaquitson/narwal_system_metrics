@@ -1,0 +1,99 @@
+\doxysection{narwal\+\_\+thermal\+\_\+zones.\+h}
+\hypertarget{narwal__thermal__zones_8h_source}{}\label{narwal__thermal__zones_8h_source}\index{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_thermal\_zones/narwal\_thermal\_zones.h@{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_thermal\_zones/narwal\_thermal\_zones.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ NARWAL\_THERMAL\_ZONE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <dirent.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ configs}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_CONFIG\_H}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONE\_PATH\_MAX\ 100}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONE\_THERMAL\_DIR\ "{}/sys/class/thermal/"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONE\_TYPE\_MAX\ 20}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONE\_TEMP\_MAX\ 6}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONE\_TEMPERATURE\_CELCIUS}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ PRIV\_NARWAL\_THERMAL\_ZONES\_OPT\_NO\_REWIND\ 1}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ PRIV\_NARWAL\_THERMAL\_ZONES\_OPT\_REWIND\ 2}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ end\ configs}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{char}\ \ \ \doxymbox{\hyperlink{structNarwalThermalZone_a2e632da13fcbf48fef859563ec27d001}{path}}[NARWAL\_THERMAL\_ZONE\_PATH\_MAX];\ \ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{structNarwalThermalZone_ab2767a86b612301f2d25783904f06550}{path\_len}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{char}\ \ \ \doxymbox{\hyperlink{structNarwalThermalZone_a5b14b7ad08cef2ed198890e35f56580f}{type}}[NARWAL\_THERMAL\_ZONE\_TYPE\_MAX];\ \ }
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{structNarwalThermalZone_a08c343d71a3e97e0b523049647489c1f}{type\_len}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{structNarwalThermalZone_ab0de46058bddac90536cc7e880445b6b}{error}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \}\ \doxymbox{\hyperlink{structNarwalThermalZone}{NarwalThermalZone}};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{comment}{//private\ functions}}
+\DoxyCodeLine{00039\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{narwal__thermal__zones_8c_ac6e6242a173b40ee567063e7ceba164e}{priv\_narwal\_thermal\_zones\_fill\_next}}(\doxymbox{\hyperlink{structNarwalThermalZone}{NarwalThermalZone}}\ *tz\_p,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ opts);}
+\DoxyCodeLine{00040\ \textcolor{comment}{//end\ private\ functions}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{float}\ narwal\_thermal\_zones\_get\_temp(\doxymbox{\hyperlink{structNarwalThermalZone}{NarwalThermalZone}}\ *tz\_p);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ *\ @brief\ Retrive\ the\ next\ thermal\ zone\ available\ on\ the\ system}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ *\ Retrive\ the\ next\ thermal\ zone\ available\ on\ the\ system}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ *\ On\ each\ successful\ call,\ this\ function\ clears\ the\ structure\ pointed\ to\ by}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ "{}tz\_p"{}\ and\ fills\ it\ with\ information\ about\ the\ next\ available\ thermal\ zone.}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ *\ Successive\ calls\ iterate\ through\ all\ thermal\ zones\ detected\ on\ the\ system.}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ *\ This\ function\ is\ a\ wrrapper\ of\ the\ priv\_narwal\_thermal\_zones\_fill\_next\ function}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ *\ @param\ tz\_p\ \ Pointer\ to\ the\ structure\ in\ which\ the\ thermal\ zone\ information}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ will\ be\ stored.}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ @return\ A\ status\ code\ indicating\ whether\ a\ thermal\ zone\ was\ retrieved,}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ whether\ the\ iteration\ has\ finished,\ or\ whether\ an\ error\ occurred.}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ *\ @retval\ NARWAL\_THERMAL\_ZONES\_OPEN\_ERR\ Indicates\ an\ error\ when\ trying\ to\ opne}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ *\ the\ /sys/class/thermal/\ directory\ }}
+\DoxyCodeLine{00065\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ narwal\_thermal\_zones\_fill\_next(tz\_p)\ \ priv\_narwal\_thermal\_zones\_fill\_next((tz\_p),\ PRIV\_NARWAL\_THERMAL\_ZONES\_OPT\_NO\_REWIND)}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00096\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{narwal__thermal__zones_8c_a8dbc6fadfc71f33568aa577dce0fad02}{narwal\_thermal\_zones\_fill\_by\_type}}(\doxymbox{\hyperlink{structNarwalThermalZone}{NarwalThermalZone}}\ *tz\_p,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *type\_str\_p);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00115\ \textcolor{keywordtype}{char}\ *\doxymbox{\hyperlink{narwal__thermal__zones_8c_a17885c059591dd20e90dfd9ab1a29899}{narwal\_thermal\_zones\_get\_type}}(\doxymbox{\hyperlink{structNarwalThermalZone}{NarwalThermalZone}}\ *tz\_p);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{enum}\ NARWAL\_THERMAL\_ZONE\_RC\ \{}
+\DoxyCodeLine{00118\ \ \ NARWAL\_THERMAL\_ZONE\_ERR,}
+\DoxyCodeLine{00119\ \ \ NARWAL\_THERMAL\_ZONE\_SUCESS,}
+\DoxyCodeLine{00120\ \ \ \textcolor{comment}{//\ there\ are\ no\ more\ thermal\ zones\ left}}
+\DoxyCodeLine{00121\ \ \ NARWAL\_THERMAL\_ZONE\_NO\_MORE\_TZ,}
+\DoxyCodeLine{00122\ \ \ NARWAL\_THERMAL\_ZONE\_TZ\_DOES\_NOT\_EXIST,}
+\DoxyCodeLine{00123\ \};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{keyword}{enum}\ NARWAL\_THERMAL\_ZONE\_ERRS\ \{}
+\DoxyCodeLine{00126\ \ \ NARWAL\_THERMAL\_ZONE\_INVALID\_PATH,}
+\DoxyCodeLine{00127\ \};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_NO\_MORE\_TZ\ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_SUCCESS\ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_OPEN\_ERR\ \ \ \ \ \ \ \ -\/1}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_READ\_ERR\ \ \ \ \ \ \ \ -\/2}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_KEY\_NOT\_FOUND\ \ \ -\/3}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_TO\_LARGE\_ENTRY\ \ -\/4}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_NULL\_BUF\ \ \ \ \ \ \ \ -\/5}}
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_NULL\_PTR\ \ \ \ \ \ \ \ -\/6}}
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#define\ NARWAL\_THERMAL\_ZONES\_SEEK\_RESET\_ERR\ \ -\/7}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

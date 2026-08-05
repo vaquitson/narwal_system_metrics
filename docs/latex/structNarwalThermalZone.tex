@@ -1,0 +1,69 @@
+\doxysection{Narwal\+Thermal\+Zone Struct Reference}
+\hypertarget{structNarwalThermalZone}{}\label{structNarwalThermalZone}\index{NarwalThermalZone@{NarwalThermalZone}}
+
+
+Represents a Linux thermal zone.  
+
+
+
+
+{\ttfamily \+\#include $<$narwal\+\_\+thermal\+\_\+zones.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char \doxymbox{\hyperlink{structNarwalThermalZone_a2e632da13fcbf48fef859563ec27d001}{path}} \+[NARWAL\+\_\+\+THERMAL\+\_\+\+ZONE\+\_\+\+PATH\+\_\+\+MAX]\+
+\item 
+size\+\_\+t \doxymbox{\hyperlink{structNarwalThermalZone_ab2767a86b612301f2d25783904f06550}{path\+\_\+len}}
+\item 
+char \doxymbox{\hyperlink{structNarwalThermalZone_a5b14b7ad08cef2ed198890e35f56580f}{type}} \+[NARWAL\+\_\+\+THERMAL\+\_\+\+ZONE\+\_\+\+TYPE\+\_\+\+MAX]\+
+\item 
+size\+\_\+t \doxymbox{\hyperlink{structNarwalThermalZone_a08c343d71a3e97e0b523049647489c1f}{type\+\_\+len}}
+\item 
+int \doxymbox{\hyperlink{structNarwalThermalZone_ab0de46058bddac90536cc7e880445b6b}{error}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a Linux thermal zone. 
+
+This structure stores the information required to interact with a thermal zone through the Narwal Thermal Zones interface. 
+
+\label{doc-variable-members}
+\Hypertarget{structNarwalThermalZone_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{structNarwalThermalZone_ab0de46058bddac90536cc7e880445b6b}\index{NarwalThermalZone@{NarwalThermalZone}!error@{error}}
+\index{error@{error}!NarwalThermalZone@{NarwalThermalZone}}
+\doxysubsubsection{\texorpdfstring{error}{error}}
+{\footnotesize\ttfamily \label{structNarwalThermalZone_ab0de46058bddac90536cc7e880445b6b} 
+int Narwal\+Thermal\+Zone::\+error}
+
+Error code associated with the last operation. \Hypertarget{structNarwalThermalZone_a2e632da13fcbf48fef859563ec27d001}\index{NarwalThermalZone@{NarwalThermalZone}!path@{path}}
+\index{path@{path}!NarwalThermalZone@{NarwalThermalZone}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily \label{structNarwalThermalZone_a2e632da13fcbf48fef859563ec27d001} 
+char Narwal\+Thermal\+Zone::\+path\+[NARWAL\+\_\+\+THERMAL\+\_\+\+ZONE\+\_\+\+PATH\+\_\+\+MAX]\+}
+
+Absolute path to the corresponding thermal zone directory. \Hypertarget{structNarwalThermalZone_ab2767a86b612301f2d25783904f06550}\index{NarwalThermalZone@{NarwalThermalZone}!path\_len@{path\_len}}
+\index{path\_len@{path\_len}!NarwalThermalZone@{NarwalThermalZone}}
+\doxysubsubsection{\texorpdfstring{path\_len}{path\_len}}
+{\footnotesize\ttfamily \label{structNarwalThermalZone_ab2767a86b612301f2d25783904f06550} 
+size\+\_\+t Narwal\+Thermal\+Zone::\+path\+\_\+len}
+
+Length of \doxylink{structNarwalThermalZone_a2e632da13fcbf48fef859563ec27d001}{path}, excluding the null terminator. \Hypertarget{structNarwalThermalZone_a5b14b7ad08cef2ed198890e35f56580f}\index{NarwalThermalZone@{NarwalThermalZone}!type@{type}}
+\index{type@{type}!NarwalThermalZone@{NarwalThermalZone}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{structNarwalThermalZone_a5b14b7ad08cef2ed198890e35f56580f} 
+char Narwal\+Thermal\+Zone::\+type\+[NARWAL\+\_\+\+THERMAL\+\_\+\+ZONE\+\_\+\+TYPE\+\_\+\+MAX]\+}
+
+Type or name reported by the thermal zone. \Hypertarget{structNarwalThermalZone_a08c343d71a3e97e0b523049647489c1f}\index{NarwalThermalZone@{NarwalThermalZone}!type\_len@{type\_len}}
+\index{type\_len@{type\_len}!NarwalThermalZone@{NarwalThermalZone}}
+\doxysubsubsection{\texorpdfstring{type\_len}{type\_len}}
+{\footnotesize\ttfamily \label{structNarwalThermalZone_a08c343d71a3e97e0b523049647489c1f} 
+size\+\_\+t Narwal\+Thermal\+Zone::\+type\+\_\+len}
+
+Length of \doxylink{structNarwalThermalZone_a5b14b7ad08cef2ed198890e35f56580f}{type}, excluding the null terminator. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+/\+home/\+narval/\+programing/\+narwal\+\_\+libs/\+narwal\+\_\+system\+\_\+metrics/\+src/\+narwal\+\_\+thermal\+\_\+zones/\+narwal\+\_\+thermal\+\_\+zones.\+h\end{DoxyCompactItemize}

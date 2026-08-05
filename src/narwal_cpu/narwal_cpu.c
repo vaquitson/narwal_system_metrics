@@ -32,8 +32,6 @@ int stat_fd = -1;
 
 #define NARWAL_CPU_EVENT_PREFIX(X) NARWAL_CPU_##X
 
-#define PRIV_NARWAL_CPU_GET_TIME(ptr, key) (ptr)->info_arr[(key)]
-
 #define NARWAL_CPU_USER_TIME         1  /* Time spent executing user processes. */
 #define NARWAL_CPU_NICE_TIME         2  /* Time spent executing niced user processes. */
 #define NARWAL_CPU_SYSTEM_TIME       3  /* Time spent executing kernel processes. */
@@ -50,7 +48,7 @@ int stat_fd = -1;
 
 
 // Initialize the global fd if not priviously intialize
-ssize_t priv_narwal_string_read_fd(
+static ssize_t priv_narwal_string_read_fd(
         int *fd, 
         char *buf, size_t size, 
   const char *path,
@@ -90,8 +88,8 @@ ssize_t priv_narwal_string_read_fd(
 }
 
 
-// Form https://raw.githubusercontent.com/vaquitson/narwal_algorithms/refs/heads/main/string_parsing/src/narwal_column_parsing.c
-int narwal_str_get_col(
+// from https://raw.githubusercontent.com/vaquitson/narwal_algorithms/refs/heads/main/string_parsing/src/narwal_column_parsing.c
+static int narwal_str_get_col(
   const char *str_p,   size_t str_l, 
   const char *delim_p, size_t delim_l,
   char *buf_p,   size_t buf_s,

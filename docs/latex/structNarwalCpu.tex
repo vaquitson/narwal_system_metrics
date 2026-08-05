@@ -1,0 +1,45 @@
+\doxysection{Narwal\+Cpu Struct Reference}
+\hypertarget{structNarwalCpu}{}\label{structNarwalCpu}\index{NarwalCpu@{NarwalCpu}}
+
+
+Stores CPU identification and accumulated CPU time information.  
+
+
+
+
+{\ttfamily \+\#include $<$narwal\+\_\+cpu.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{structNarwalCpu_a28554f47f562052ae35c36ed74ce5a49}{cpu\+\_\+n}}
+\item 
+Narwal\+Cpu\+Time\+\_\+t \doxymbox{\hyperlink{structNarwalCpu_a0a2ddd1388bd0627d3d588cf65970ac8}{info\+\_\+arr}} \+[10]\+
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores CPU identification and accumulated CPU time information. 
+
+This structure contains the information required to interact with the Narwal CPU interface. It identifies a logical CPU and stores its accumulated time counters. 
+
+\label{doc-variable-members}
+\Hypertarget{structNarwalCpu_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{structNarwalCpu_a28554f47f562052ae35c36ed74ce5a49}\index{NarwalCpu@{NarwalCpu}!cpu\_n@{cpu\_n}}
+\index{cpu\_n@{cpu\_n}!NarwalCpu@{NarwalCpu}}
+\doxysubsubsection{\texorpdfstring{cpu\_n}{cpu\_n}}
+{\footnotesize\ttfamily \label{structNarwalCpu_a28554f47f562052ae35c36ed74ce5a49} 
+int Narwal\+Cpu::\+cpu\+\_\+n}
+
+Logical CPU number. A value of -\/1 represents the aggregate CPU. \Hypertarget{structNarwalCpu_a0a2ddd1388bd0627d3d588cf65970ac8}\index{NarwalCpu@{NarwalCpu}!info\_arr@{info\_arr}}
+\index{info\_arr@{info\_arr}!NarwalCpu@{NarwalCpu}}
+\doxysubsubsection{\texorpdfstring{info\_arr}{info\_arr}}
+{\footnotesize\ttfamily \label{structNarwalCpu_a0a2ddd1388bd0627d3d588cf65970ac8} 
+Narwal\+Cpu\+Time\+\_\+t Narwal\+Cpu::\+info\+\_\+arr\+[10]\+}
+
+Array containing the accumulated time counters for the selected CPU. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+/\+home/\+narval/\+programing/\+narwal\+\_\+libs/\+narwal\+\_\+system\+\_\+metrics/\+src/\+narwal\+\_\+cpu/\+narwal\+\_\+cpu.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,195 @@
+\doxysection{/\+home/\+narval/\+programing/\+narwal\+\_\+libs/\+narwal\+\_\+system\+\_\+metrics/\+src/\+narwal\+\_\+cpu/\+narwal\+\_\+cpu.c File Reference}
+\hypertarget{narwal__cpu_8c}{}\label{narwal__cpu_8c}\index{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_cpu/narwal\_cpu.c@{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_cpu/narwal\_cpu.c}}
+
+
+Internal implementation of the Narwal CPU interface.  
+
+
+{\ttfamily \+\#include $<$stddef.\+h$>$}\newline
+{\ttfamily \+\#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+{\ttfamily \+\#include $<$unistd.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$limits.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include "{}narwal\+\_\+cpu.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{narwal__cpu_8c_a9a9ac3596236e1a49c7031c9221197c4}\label{narwal__cpu_8c_a9a9ac3596236e1a49c7031c9221197c4} 
+\+\#define {\bfseries NARWAL\+\_\+\+PRIV\+\_\+\+OPT\+\_\+\+NO\+\_\+\+RESET\+\_\+\+SEEK}~1
+\item 
+\Hypertarget{narwal__cpu_8c_a11c47693f7775772a969e4a133e231cb}\label{narwal__cpu_8c_a11c47693f7775772a969e4a133e231cb} 
+\+\#define {\bfseries NARWAL\+\_\+\+PRIV\+\_\+\+OPT\+\_\+\+RESET\+\_\+\+SEEK}~2
+\item 
+\+\#define \doxymbox{\hyperlink{narwal__cpu_8c_a3513f01305ba4f0d2425f3cf17555c7f}{NARWAL\+\_\+\+CPU\+\_\+\+EVENT\+\_\+\+PREFIX}}(X)
+\item 
+\+\#define \doxymbox{\hyperlink{narwal__cpu_8c_a8881b6960887f5c45f5d6ee7a5963261}{PRIV\+\_\+\+NARWAL\+\_\+\+CPU\+\_\+\+GET\+\_\+\+TIME}}(ptr,  key)
+\item 
+\Hypertarget{narwal__cpu_8c_ace16a48713433ae542c4f2d8a2b0c179}\label{narwal__cpu_8c_ace16a48713433ae542c4f2d8a2b0c179} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+USER\+\_\+\+TIME}~1  /\+\texorpdfstring{$\ast$}{*} Time spent executing user processes. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_a392616b2d7a0c680f20ece8a8225e02e}\label{narwal__cpu_8c_a392616b2d7a0c680f20ece8a8225e02e} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+NICE\+\_\+\+TIME}~2  /\+\texorpdfstring{$\ast$}{*} Time spent executing niced user processes. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_a1f4b3dd221030e39f2e80feb7e6fa0b9}\label{narwal__cpu_8c_a1f4b3dd221030e39f2e80feb7e6fa0b9} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+SYSTEM\+\_\+\+TIME}~3  /\+\texorpdfstring{$\ast$}{*} Time spent executing kernel processes. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_a1d6d4ce6ce975c3b949fcb1403fa82ff}\label{narwal__cpu_8c_a1d6d4ce6ce975c3b949fcb1403fa82ff} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+IDLE\+\_\+\+TIME}~4  /\+\texorpdfstring{$\ast$}{*} Time spent idle. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_aea4f0c20e5b551a87f732fd177bb80a0}\label{narwal__cpu_8c_aea4f0c20e5b551a87f732fd177bb80a0} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+IOWAIT\+\_\+\+TIME}~5  /\+\texorpdfstring{$\ast$}{*} Time spent waiting for I/\+O completion. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_ac109be377eea1b37f6dc217086337cbb}\label{narwal__cpu_8c_ac109be377eea1b37f6dc217086337cbb} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+IRQ\+\_\+\+TIME}~6  /\+\texorpdfstring{$\ast$}{*} Time spent servicing hardware interrupts. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_ac66a29cc79118b421bd3adfa0af88975}\label{narwal__cpu_8c_ac66a29cc79118b421bd3adfa0af88975} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+SOFTIRQ\+\_\+\+TIME}~7  /\+\texorpdfstring{$\ast$}{*} Time spent servicing software interrupts. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_a3638f5044628d2d5214dd2fd21f7bf6a}\label{narwal__cpu_8c_a3638f5044628d2d5214dd2fd21f7bf6a} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+STEAL\+\_\+\+TIME}~8  /\+\texorpdfstring{$\ast$}{*} Time involuntarily waiting for other virtual CPUs. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_a294492100a6b792b243f8342b4a203f2}\label{narwal__cpu_8c_a294492100a6b792b243f8342b4a203f2} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+GUEST\+\_\+\+TIME}~9  /\+\texorpdfstring{$\ast$}{*} Time spent running a guest VM. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_abc45727988f252a7cffd33486320895a}\label{narwal__cpu_8c_abc45727988f252a7cffd33486320895a} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+GUEST\+\_\+\+NICE\+\_\+\+TIME}~10  /\+\texorpdfstring{$\ast$}{*} Time spent running a niced guest VM. \texorpdfstring{$\ast$}{*}/\+
+\item 
+\Hypertarget{narwal__cpu_8c_a56fd0bec4444046984f52c8f28cd70f2}\label{narwal__cpu_8c_a56fd0bec4444046984f52c8f28cd70f2} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+STAT\+\_\+\+PATH}~"{}/\+proc/\+stat"{}
+\item 
+\Hypertarget{narwal__cpu_8c_af77d3f68b5ac8ffd66fdd16ba670c77c}\label{narwal__cpu_8c_af77d3f68b5ac8ffd66fdd16ba670c77c} 
+\+\#define {\bfseries NARWAL\+\_\+\+CPU\+\_\+\+READ\+\_\+\+SIZE}~1024
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{narwal__cpu_8c_ae074d07094054a831004ecbbb6b050d9}\label{narwal__cpu_8c_ae074d07094054a831004ecbbb6b050d9} 
+ssize\+\_\+t {\bfseries priv\+\_\+narwal\+\_\+string\+\_\+read\+\_\+fd} (int \texorpdfstring{$\ast$}{*}fd, char \texorpdfstring{$\ast$}{*}buf, size\+\_\+t size, const char \texorpdfstring{$\ast$}{*}path, unsigned int opt, int \texorpdfstring{$\ast$}{*}err)
+\item 
+\Hypertarget{narwal__cpu_8c_a1426fa648538467132936d4f77023ac2}\label{narwal__cpu_8c_a1426fa648538467132936d4f77023ac2} 
+int {\bfseries narwal\+\_\+str\+\_\+get\+\_\+col} (const char \texorpdfstring{$\ast$}{*}str\+\_\+p, size\+\_\+t str\+\_\+l, const char \texorpdfstring{$\ast$}{*}delim\+\_\+p, size\+\_\+t delim\+\_\+l, char \texorpdfstring{$\ast$}{*}buf\+\_\+p, size\+\_\+t buf\+\_\+s, int index)
+\item 
+int \doxymbox{\hyperlink{narwal__cpu_8c_aef864968e1791fd9f9a5cc942b5000ba}{narwal\+\_\+cpu\+\_\+init}} (\doxymbox{\hyperlink{structNarwalCpu}{Narwal\+Cpu}} \texorpdfstring{$\ast$}{*}cpu\+\_\+p, int cpu\+\_\+n)
+\begin{DoxyCompactList}\small\item\em Initialize the \doxylink{structNarwalCpu}{Narwal\+Cpu} structure provided by the "{}cpu\+\_\+p"{} pointer. \end{DoxyCompactList}\item 
+\Hypertarget{narwal__cpu_8c_a2498172d212e5ff9a9cc2f748800c97f}\label{narwal__cpu_8c_a2498172d212e5ff9a9cc2f748800c97f} 
+Narwal\+Cpu\+Time\+\_\+t {\bfseries narwal\+\_\+cpu\+\_\+busy\+\_\+time} (\doxymbox{\hyperlink{structNarwalCpu}{Narwal\+Cpu}} \texorpdfstring{$\ast$}{*}cpu\+\_\+p)
+\item 
+\Hypertarget{narwal__cpu_8c_a0f1b552accb37af22b807db6f505585c}\label{narwal__cpu_8c_a0f1b552accb37af22b807db6f505585c} 
+Narwal\+Cpu\+Time\+\_\+t {\bfseries narwal\+\_\+cpu\+\_\+idle\+\_\+time} (\doxymbox{\hyperlink{structNarwalCpu}{Narwal\+Cpu}} \texorpdfstring{$\ast$}{*}cpu\+\_\+p)
+\item 
+int \doxymbox{\hyperlink{narwal__cpu_8c_a5a8fbd6c0d946e0d8357a1e27e7deb33}{narwal\+\_\+cpu\+\_\+print\+\_\+info}} (\doxymbox{\hyperlink{structNarwalCpu}{Narwal\+Cpu}} \texorpdfstring{$\ast$}{*}cpu\+\_\+p)
+\begin{DoxyCompactList}\small\item\em Print the time information of the provided \doxylink{structNarwalCpu}{Narwal\+Cpu} structure. \end{DoxyCompactList}\item 
+\Hypertarget{narwal__cpu_8c_a7a1a08c15a7209139e33c683971288fe}\label{narwal__cpu_8c_a7a1a08c15a7209139e33c683971288fe} 
+int {\bfseries narwal\+\_\+cpu\+\_\+info} (\doxymbox{\hyperlink{structNarwalCpu}{Narwal\+Cpu}} \texorpdfstring{$\ast$}{*}cpu\+\_\+p)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{narwal__cpu_8c_aa10a55b6918c7ab06e9138994a28e7d4}\label{narwal__cpu_8c_aa10a55b6918c7ab06e9138994a28e7d4} 
+int {\bfseries stat\+\_\+fd} = -\/1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal implementation of the Narwal CPU interface. 
+
+This file contains the functions required to retrieve and process CPU information from the /\+proc/\+stat file.
+
+For more information about the /\+proc/\+stat format, see:\+ \href{https://docs.kernel.org/filesystems/proc.html\#miscellaneous-kernel-statistics-in-proc-stat}{\texttt{https:\+/\+/\+docs.\+kernel.\+org/\+filesystems/\+proc.\+html\+\#miscellaneous-\/kernel-\/statistics-\/in-\/proc-\/stat}}
+
+\begin{DoxyAuthor}{Author}
+Narwal 
+\end{DoxyAuthor}
+
+
+\label{doc-define-members}
+\Hypertarget{narwal__cpu_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{narwal__cpu_8c_a3513f01305ba4f0d2425f3cf17555c7f}\index{narwal\_cpu.c@{narwal\_cpu.c}!NARWAL\_CPU\_EVENT\_PREFIX@{NARWAL\_CPU\_EVENT\_PREFIX}}
+\index{NARWAL\_CPU\_EVENT\_PREFIX@{NARWAL\_CPU\_EVENT\_PREFIX}!narwal\_cpu.c@{narwal\_cpu.c}}
+\doxysubsubsection{\texorpdfstring{NARWAL\_CPU\_EVENT\_PREFIX}{NARWAL\_CPU\_EVENT\_PREFIX}}
+{\footnotesize\ttfamily \label{narwal__cpu_8c_a3513f01305ba4f0d2425f3cf17555c7f} 
+\+\#define NARWAL\+\_\+\+CPU\+\_\+\+EVENT\+\_\+\+PREFIX(\begin{DoxyParamCaption}\item[{}]{X}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{NARWAL\_CPU\_\#\#X}
+
+\end{DoxyCode}
+\Hypertarget{narwal__cpu_8c_a8881b6960887f5c45f5d6ee7a5963261}\index{narwal\_cpu.c@{narwal\_cpu.c}!PRIV\_NARWAL\_CPU\_GET\_TIME@{PRIV\_NARWAL\_CPU\_GET\_TIME}}
+\index{PRIV\_NARWAL\_CPU\_GET\_TIME@{PRIV\_NARWAL\_CPU\_GET\_TIME}!narwal\_cpu.c@{narwal\_cpu.c}}
+\doxysubsubsection{\texorpdfstring{PRIV\_NARWAL\_CPU\_GET\_TIME}{PRIV\_NARWAL\_CPU\_GET\_TIME}}
+{\footnotesize\ttfamily \label{narwal__cpu_8c_a8881b6960887f5c45f5d6ee7a5963261} 
+\+\#define PRIV\+\_\+\+NARWAL\+\_\+\+CPU\+\_\+\+GET\+\_\+\+TIME(\begin{DoxyParamCaption}\item[{}]{ptr}{, }\item[{}]{key}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(ptr)-\/>info\_arr[(key)]}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{narwal__cpu_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{narwal__cpu_8c_aef864968e1791fd9f9a5cc942b5000ba}\index{narwal\_cpu.c@{narwal\_cpu.c}!narwal\_cpu\_init@{narwal\_cpu\_init}}
+\index{narwal\_cpu\_init@{narwal\_cpu\_init}!narwal\_cpu.c@{narwal\_cpu.c}}
+\doxysubsubsection{\texorpdfstring{narwal\_cpu\_init()}{narwal\_cpu\_init()}}
+{\footnotesize\ttfamily \label{narwal__cpu_8c_aef864968e1791fd9f9a5cc942b5000ba} 
+int narwal\+\_\+cpu\+\_\+init (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNarwalCpu}{Narwal\+Cpu}} \texorpdfstring{$\ast$}{*}}]{cpu\+\_\+p}{, }\item[{int}]{cpu\+\_\+n}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the \doxylink{structNarwalCpu}{Narwal\+Cpu} structure provided by the "{}cpu\+\_\+p"{} pointer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cpu\+\_\+p} & A pointer to a \doxylink{structNarwalCpu}{Narwal\+Cpu} structure. \\
+\hline
+{\em cpu\+\_\+n} & Number of the logical CPU we want to represent. The macro NARWAL\+\_\+\+CPU\+\_\+\+GENERAL\+\_\+\+CPU identifies the accumulated information for all the CPU cores.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+On success, return a non-\/negative value; on error, return a negative value.
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em NARWAL\+\_\+\+CPU\+\_\+\+SUCCESS} & The structure was filled successfully. \\
+\hline
+{\em NARWAL\+\_\+\+CPU\+\_\+\+KEY\+\_\+\+NOT\+\_\+\+FOUND} & Couldn\textquotesingle{}t find a CPU with the logical number provided by "{}cpu\+\_\+n"{}. \\
+\hline
+{\em NARWAL\+\_\+\+CPU\+\_\+\+NULL\+\_\+\+PTR} & The "{}cpu\+\_\+p"{} pointer is NULL. \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{narwal__cpu_8c_a5a8fbd6c0d946e0d8357a1e27e7deb33}\index{narwal\_cpu.c@{narwal\_cpu.c}!narwal\_cpu\_print\_info@{narwal\_cpu\_print\_info}}
+\index{narwal\_cpu\_print\_info@{narwal\_cpu\_print\_info}!narwal\_cpu.c@{narwal\_cpu.c}}
+\doxysubsubsection{\texorpdfstring{narwal\_cpu\_print\_info()}{narwal\_cpu\_print\_info()}}
+{\footnotesize\ttfamily \label{narwal__cpu_8c_a5a8fbd6c0d946e0d8357a1e27e7deb33} 
+int narwal\+\_\+cpu\+\_\+print\+\_\+info (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNarwalCpu}{Narwal\+Cpu}} \texorpdfstring{$\ast$}{*}}]{cpu\+\_\+p}{}\end{DoxyParamCaption})}
+
+
+
+Print the time information of the provided \doxylink{structNarwalCpu}{Narwal\+Cpu} structure. 
+
+Print the accumulated CPU time information stored in the structure pointed to by "{}cpu\+\_\+p"{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cpu\+\_\+p} & Pointer to the \doxylink{structNarwalCpu}{Narwal\+Cpu} structure containing the CPU information to be printed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A non-\/negative status code on success or a negative status code if an error occurs.
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em NARWAL\+\_\+\+CPU\+\_\+\+SUCCESS} & The CPU information was printed successfully. \\
+\hline
+{\em NARWAL\+\_\+\+CPU\+\_\+\+KEY\+\_\+\+NOT\+\_\+\+FOUND} & The CPU identified by "{}cpu\+\_\+n"{} was not found. \\
+\hline
+{\em NARWAL\+\_\+\+CPU\+\_\+\+READ\+\_\+\+ERR} & An error occurred while trying to read the CPU information. \\
+\hline
+\end{DoxyRetVals}

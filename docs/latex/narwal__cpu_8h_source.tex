@@ -1,0 +1,52 @@
+\doxysection{narwal\+\_\+cpu.\+h}
+\hypertarget{narwal__cpu_8h_source}{}\label{narwal__cpu_8h_source}\index{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_cpu/narwal\_cpu.h@{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_cpu/narwal\_cpu.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ NARWAL\_CPU\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ NarwalCpuTime\_t\ int64\_t\ \ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_GENERAL\_CPU\ -\/1\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_SUCCESS\ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_OPEN\_ERR\ \ \ \ \ \ \ -\/1}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_READ\_ERR\ \ \ \ \ \ \ -\/2}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_KEY\_NOT\_FOUND\ \ -\/3}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_TO\_LARGE\_ENTRY\ -\/4}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_NULL\_BUF\ \ \ \ \ \ \ -\/5}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_NULL\_PTR\ \ \ \ \ \ \ -\/6}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_SEEK\_RESET\_ERR\ -\/7}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ NARWAL\_CPU\_OUT\_OF\_BOUNCE\ \ -\/8\ \ }\textcolor{comment}{/*\ Indicate\ thath\ some\ number\ is\ out\ of\ a\ valid\ range\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structNarwalCpu_a28554f47f562052ae35c36ed74ce5a49}{cpu\_n}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ NarwalCpuTime\_t\ \doxymbox{\hyperlink{structNarwalCpu_a0a2ddd1388bd0627d3d588cf65970ac8}{info\_arr}}[10];\ \ }
+\DoxyCodeLine{00032\ \}\ \doxymbox{\hyperlink{structNarwalCpu}{NarwalCpu}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{narwal__cpu_8c_a5a8fbd6c0d946e0d8357a1e27e7deb33}{narwal\_cpu\_print\_info}}(\doxymbox{\hyperlink{structNarwalCpu}{NarwalCpu}}\ *cpu\_p);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{narwal__cpu_8c_a5a8fbd6c0d946e0d8357a1e27e7deb33}{narwal\_cpu\_print\_info}}(\doxymbox{\hyperlink{structNarwalCpu}{NarwalCpu}}\ *cpu\_p);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ NarwalCpuTime\_t\ narwal\_cpu\_idle\_time(\doxymbox{\hyperlink{structNarwalCpu}{NarwalCpu}}\ *cpu\_p);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ NarwalCpuTime\_t\ narwal\_cpu\_busy\_time(\doxymbox{\hyperlink{structNarwalCpu}{NarwalCpu}}\ *cpu\_p);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{narwal__cpu_8c_aef864968e1791fd9f9a5cc942b5000ba}{narwal\_cpu\_init}}(\doxymbox{\hyperlink{structNarwalCpu}{NarwalCpu}}\ *cpu\_p,\ \textcolor{keywordtype}{int}\ cpu\_n);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#ifdef\ NARWAL\_TEST}}
+\DoxyCodeLine{00094\ \textcolor{keywordtype}{int}\ *priv\_narwal\_cpu\_get\_fd();}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

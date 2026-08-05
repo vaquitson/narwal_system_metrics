@@ -1,0 +1,33 @@
+\doxysection{narwal\+\_\+ram.\+h}
+\hypertarget{narwal__ram_8h_source}{}\label{narwal__ram_8h_source}\index{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_ram/narwal\_ram.h@{/home/narval/programing/narwal\_libs/narwal\_system\_metrics/src/narwal\_ram/narwal\_ram.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ NARWAL\_RAM\_C}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_C}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_MEMINFO\_PATH\ "{}/proc/meminfo"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_ENTRY\_VALUE\_MAX\ 15}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ MemSize\_t;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ MemSize\_t\ narwal\_ram\_size(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00010\ MemSize\_t\ narwal\_ram\_usage(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00011\ \textcolor{keywordtype}{float}\ narwal\_ram\_usage\_percentage(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_READ\_SIZE\ 250}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_EVENT\_PREFIX(X)\ NARWAL\_RAM\_\#\#X}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_SUCCESS\ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_OPEN\_ERR\ \ \ \ \ \ \ -\/1}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_READ\_ERR\ \ \ \ \ \ \ -\/2}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_KEY\_NOT\_FOUND\ \ -\/3}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_TO\_LARGE\_ENTRY\ -\/4}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_NULL\_BUF\ \ \ \ \ \ \ -\/5}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ NARWAL\_RAM\_SEEK\_RESET\_ERR\ -\/6}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
