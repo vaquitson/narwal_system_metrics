@@ -1,32 +1,21 @@
 
 /**
-* @brief Retrieve the thermal zone corresponding to the provided type string
-*
-* Retrieve the thermal zone corresponding to the provided type string.
-* This function clears the structure pointed to by "tz_p", so it is safe
-* to use with a previously initialized thermal zone.
-*
-* In case of an error, a negative value is returned indicating the error.
-* The contents of the thermal zone pointed to by "tz_p" may be left in an
-* undefined state.
-*
-* @param tz_p Pointer to the structure where the thermal zone information
-* will be stored.
-*
-* @param type_str_p String containing the type name of the thermal zone.
-*
-* @return An event code. If the returned value is negative, an error has
-* occurred.
-*
-* @retval NARWAL_THERMAL_ZONES_SUCCESS The thermal zone structure was filled
-* successfully.
-* @retval NARWAL_THERMAL_ZONES_NULL_PTR Either "tz_p" or "type_str_p" is NULL.
-* @retval NARWAL_THERMAL_ZONES_OPEN_ERR An error occurred while trying to open
-* the thermal zone directory /sys/class/thermal/.
-* @retval NARWAL_THERMAL_ZONES_READ_ERR An error occurred while trying to read
-* the type file of a thermal zone.
-*/
 
-int narwal_thermal_zones_fill_by_type(NarwalThermalZone *tz_p,
-const char *type_str_p);
+* @brief Print the time information of the provided NarwalCpu structure
+*
+* Print the accumulated CPU time information stored in the structure pointed
+* to by "cpu_p".
+*
+* @param cpu_p Pointer to the NarwalCpu structure containing the CPU
+* information to be printed.
+*
+* @return A non-negative status code on success or a negative status code
+* if an error occurs.
+*
+* @retval NARWAL_CPU_SUCCESS The CPU information was printed successfully.
+* @retval NARWAL_CPU_KEY_NOT_FOUND The CPU identified by "cpu_n" was not found.
+* @retval NARWAL_CPU_READ_ERR An error occurred while trying to read the CPU
+* information.
+*/
+int narwal_cpu_print_info(NarwalCpu *cpu_p);
 

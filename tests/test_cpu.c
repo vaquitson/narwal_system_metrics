@@ -65,44 +65,15 @@ int test_1(void)
     busy_time =narwal_cpu_busy_time(cur_cpu_p);
 
     if (busy_time != busy_time_arr[i+1]){
-      printf("Expect: %lld But get %lld",busy_time_arr[i+1], busy_time);
+      printf("Expect: %lld But get %lld",(long long)busy_time_arr[i+1], (long long)busy_time);
       return -3;
     }
 
     if (idle_time != idle_time_arr[i+1]){
-      printf("Expect: %lld But get %lld",idle_time_arr[i+1], idle_time);
+      printf("Expect: %lld But get %lld", (long long)idle_time_arr[i+1], (long long)idle_time);
       return -4;
     }
   }
-
-  return 0;
-
-}
-
-int test_cpu_percentage(void){
-  int stat_fd;
-  int rc = 0;
-  NarwalCpu cpu = {0};
-  NarwalCpuTime_t time = 0;
-
-
-  rc = narwal_cpu_init(&cpu, NARWAL_CPU_GENERAL_CPU);
-  if (rc < 0) {
-    printf("fuck 1: %d\n", rc);
-    return rc;
-  }
-
-  rc = narwal_cpu_print_info(&cpu);
-  if (rc < 0) {
-    printf("fuck 2: %d\n", rc);
-    return rc;
-  }
-
-  time = narwal_cpu_idle_time(&cpu); 
-  printf("idle time: %lld\n", time);
-
-  time = narwal_cpu_busy_time(&cpu); 
-  printf("busy time: %lld\n", time);
 
   return 0;
 }

@@ -32,16 +32,6 @@ int stat_fd = -1;
 
 #define NARWAL_CPU_EVENT_PREFIX(X) NARWAL_CPU_##X
 
-#define NARWAL_CPU_SUCCESS         0
-#define NARWAL_CPU_OPEN_ERR       -1
-#define NARWAL_CPU_READ_ERR       -2
-#define NARWAL_CPU_KEY_NOT_FOUND  -3
-#define NARWAL_CPU_TO_LARGE_ENTRY -4
-#define NARWAL_CPU_NULL_BUF       -5
-#define NARWAL_CPU_NULL_PTR       -6
-#define NARWAL_CPU_SEEK_RESET_ERR -7
-#define NARWAL_CPU_OUT_OF_BOUNCE  -8  /* Indicate thath some number is out of a valid range */
-
 #define PRIV_NARWAL_CPU_GET_TIME(ptr, key) (ptr)->info_arr[(key)]
 
 #define NARWAL_CPU_USER_TIME         1  /* Time spent executing user processes. */
@@ -67,12 +57,13 @@ ssize_t priv_narwal_string_read_fd(
   unsigned int opt, int *err)
 {
 
+  ssize_t data_read;
+
   if (buf == NULL) {
     *err = NARWAL_CPU_EVENT_PREFIX(NULL_BUF);
     return -1;
   }
 
-  size_t data_read;
   if (*fd < 0) {
     *fd = open(path , O_RDONLY);
     if (*fd < 0){
@@ -162,8 +153,28 @@ int narwal_str_get_col(
 
 //###### END UTILITIS  ######//
 
-int priv_narwal_cpu_get_info(
-  NARWAL_CPU_TIME_T *val_arr_p, size_t val_arr_l, int n)
+
+/**
+* @brief Fill a buffer with the information
+* of the provided cpu number
+*
+* This fcuntions fills an array "val_arr_p" of len "val_arr_l"
+* with the information corresponding to the cpu withe the 
+* number "cpu_n"
+*
+* @param val_arr_p A pointer to an array of NarwalCpuTime_t
+* @param val_arr_l The number of elements the "val_arr_p" coudl
+* hold
+* @param cpu_n The number of the cpu you want the information
+*
+* For more information: https://docs.kernel.org/filesystems/proc.html#miscellaneous-kernel-statistics-in-proc-stat
+*
+* @retval NARWAL_CPU_KEY_NOT_FOUND The "cpu_n" was not found 
+* @retval NARWAL_CPU_READ_ERR Something went wrong while trying to read
+* the /proc/stat file
+*/
+static int priv_narwal_cpu_get_info(
+  NarwalCpuTime_t *val_arr_p, size_t val_arr_l, int cpu_n)
 {
   char cpu_name_str_p[5] = {"cpu"};
 
@@ -172,24 +183,24 @@ int priv_narwal_cpu_get_info(
   char stat_str_p[NARWAL_CPU_READ_SIZE] = {0};
   char *stat_str_cpu_info_p = NULL;
 
-  char c;
   int rc = 0;
-  int i = 0;
+  size_t i = 0;
   int err = 0;
 
-  size_t read_size = 0;
+  ssize_t read_size = 0;
 
   if (val_arr_l > 10)
-    return NARWAL_CPU_EVENT_PREFIX(OUT_OF_BOUNCE);
+    val_arr_l = 10;
   
-  if (n > 9 || n < -1){
+  // Esta restriccion se puede relajar
+  if (cpu_n > 9 || cpu_n < -1){
     return NARWAL_CPU_EVENT_PREFIX(KEY_NOT_FOUND);
   }
 
-  if (n == NARWAL_CPU_GENERAL_CPU) {
+  if (cpu_n == NARWAL_CPU_GENERAL_CPU) {
     cpu_name_str_p[3] = '\0';
   } else { 
-    cpu_name_str_p[3] = 48 + n;
+    cpu_name_str_p[3] = 48 + cpu_n;
   }
 
   cpu_name_str_p[4] = '\0';
@@ -202,8 +213,6 @@ int priv_narwal_cpu_get_info(
 
     if (read_size < 0)
       return NARWAL_CPU_EVENT_PREFIX(READ_ERR);
-
-    //printf("%s", stat_str_p);
 
     stat_str_cpu_info_p = strstr(stat_str_p, cpu_name_str_p);
     if (stat_str_cpu_info_p != NULL){
@@ -247,7 +256,7 @@ int narwal_cpu_init(NarwalCpu *cpu_p, int cpu_n){
 }
 
 
-NARWAL_CPU_TIME_T narwal_cpu_busy_time(NarwalCpu *cpu_p){
+NarwalCpuTime_t narwal_cpu_busy_time(NarwalCpu *cpu_p){
   static const int narwal_cpu_busy_time_keys[] = {
     NARWAL_CPU_USER_TIME,
     NARWAL_CPU_NICE_TIME,
@@ -258,7 +267,7 @@ NARWAL_CPU_TIME_T narwal_cpu_busy_time(NarwalCpu *cpu_p){
   };
 
   int rc = 0;
-  NARWAL_CPU_TIME_T total_time = 0;
+  NarwalCpuTime_t total_time = 0;
   if (cpu_p == NULL) 
     return NARWAL_CPU_EVENT_PREFIX(NULL_PTR);
 
@@ -269,7 +278,7 @@ NARWAL_CPU_TIME_T narwal_cpu_busy_time(NarwalCpu *cpu_p){
   if (rc != 10)
     return rc;
 
-  for (int i = 0; i < sizeof(narwal_cpu_busy_time_keys)/sizeof(int); i++){
+  for (size_t i = 0; i < sizeof(narwal_cpu_busy_time_keys)/sizeof(int); i++){
     total_time += cpu_p->info_arr[narwal_cpu_busy_time_keys[i]-1]; 
   }
 
@@ -277,14 +286,14 @@ NARWAL_CPU_TIME_T narwal_cpu_busy_time(NarwalCpu *cpu_p){
 }
 
 
-NARWAL_CPU_TIME_T narwal_cpu_idle_time(NarwalCpu *cpu_p){
+NarwalCpuTime_t narwal_cpu_idle_time(NarwalCpu *cpu_p){
   static const int narwal_cpu_idle_time_keys[] = {
     NARWAL_CPU_IDLE_TIME,
     NARWAL_CPU_IOWAIT_TIME
   };
 
   int rc = 0;
-  NARWAL_CPU_TIME_T total_time = 0;
+  NarwalCpuTime_t total_time = 0;
   if (cpu_p == NULL) 
     return NARWAL_CPU_EVENT_PREFIX(NULL_PTR);
 
@@ -295,7 +304,7 @@ NARWAL_CPU_TIME_T narwal_cpu_idle_time(NarwalCpu *cpu_p){
   if (rc != 10)
     return rc;
 
-  for (int i = 0; i < sizeof(narwal_cpu_idle_time_keys)/sizeof(int); i++){
+  for (size_t i = 0; i < sizeof(narwal_cpu_idle_time_keys)/sizeof(int); i++){
     total_time += cpu_p->info_arr[narwal_cpu_idle_time_keys[i]-1]; 
   }
 
@@ -343,8 +352,10 @@ int narwal_cpu_print_info(NarwalCpu *cpu_p){
   return NARWAL_CPU_EVENT_PREFIX(SUCCESS);
 }
 
+
+// Esta funcion podria no estar.
 int narwal_cpu_info(NarwalCpu *cpu_p) {
-  int err, rc = 0;
+  int rc = 0;
 
   rc = priv_narwal_cpu_get_info(
     cpu_p->info_arr, 10, cpu_p->cpu_n);
